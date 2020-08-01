@@ -17,8 +17,6 @@ import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.sih.R;
@@ -99,6 +97,11 @@ public class RssiActivity extends AppCompatActivity implements SensorEventListen
                 mGeomagnetic[0] = alpha*mGeomagnetic[0] + (1-alpha)*event.values[0];
                 mGeomagnetic[1] = alpha*mGeomagnetic[1] + (1-alpha)*event.values[1];
                 mGeomagnetic[2] = alpha*mGeomagnetic[2] + (1-alpha)*event.values[2];
+            }
+
+            if( event.sensor.getType() == Sensor.TYPE_PRESSURE ){
+                altitude.setText("" + SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, event.values[0]));
+                Log.e("shivam", "" + SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, event.values[0]));
             }
 
             float R[] = new float[9];
@@ -219,7 +222,7 @@ public class RssiActivity extends AppCompatActivity implements SensorEventListen
         ans = new Pair<Float, Float>(0.0f, 0.0f);
 
         for(int i=0; i<pairOfRssiAndDirection.size(); i++){
-            float temp = abs(pairOfRssiAndDirection.get(i).first);                           //rssi
+            float temp = abs(pairOfRssiAndDirection.get(i).first);                           //Rssi
             if(temp<max){
                 max = temp;
                 ans = pairOfRssiAndDirection.get(i);
@@ -249,24 +252,11 @@ public class RssiActivity extends AppCompatActivity implements SensorEventListen
         hands.startAnimation(an);
     }
 
-    private void adjustDial(float prevDial, float target) {
-        Animation an = new RotateAnimation(-prevDial, -target,Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,0.5f);
-
-        an.setRepeatCount(1);
-        an.setDuration(500);
-        an.setFillAfter(true);
-
-        dial.startAnimation(an);
-        prevDial = target;
-        Log.e("shivam", "" + prevDial + " " + target);
-    }
-
     @SuppressLint("SetTextI18n")
     public void setValues(){
         rssi.setText("Rssi Value: "+ getRssiValue());
         float dis = GetDistanceFromRssiAndTxPowerOn1m(getRssiValue(), -45);
         distance.setText("Approximate Distance: "+ String.valueOf(dis));
-        direction.setText("Direction: "+ String.valueOf(currentAngle));
     }
 
 }
