@@ -2,6 +2,7 @@ package com.example.sih.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -42,7 +43,7 @@ public class RssiActivity extends AppCompatActivity implements SensorEventListen
 
     ArrayList<Pair<Float, Float>> pairOfRssiAndDirection;
 
-    Button scan, complete_scan;
+    Button scan, complete_scan, calibrate;
     TextView rssi, distance, direction, altitude;
     ImageView dial, hands;
 
@@ -55,6 +56,7 @@ public class RssiActivity extends AppCompatActivity implements SensorEventListen
         //Initializing
         scan = findViewById(R.id.scan);
         complete_scan = findViewById(R.id.complete_scan);
+        calibrate = findViewById(R.id.calibrate);
         rssi = findViewById(R.id.rssiTv);
         distance = findViewById(R.id.distanceTv);
         direction = findViewById(R.id.directionTv);
@@ -72,6 +74,13 @@ public class RssiActivity extends AppCompatActivity implements SensorEventListen
         pressure = mSensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
 
         associatedDistance = 0;
+
+        calibrate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RssiActivity.this, CalibrationActivity.class));
+            }
+        });
 
         //Method Calls
         scanning();
@@ -97,7 +106,7 @@ public class RssiActivity extends AppCompatActivity implements SensorEventListen
 
             if( event.sensor.getType() == Sensor.TYPE_PRESSURE ){
                 altitude.setTextColor(getResources().getColor(R.color.black));
-                altitude.setText("Altitude - " + SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, event.values[0]));
+                altitude.setText("Altitude - " + SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, event.values[0]) + " m");
             }
 
             float R[] = new float[9];
