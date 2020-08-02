@@ -84,4 +84,14 @@
         android:layout_marginBottom="22dp"
         android:text="Complete Scan" />
 
+    <Button
+        android:id="@+id/calibrate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="133dp"
+        android:layout_marginBottom="77dp"
+        android:text="Calibrate Floor" />
+
 </RelativeLayout>

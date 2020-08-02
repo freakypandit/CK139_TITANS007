@@ -40,6 +40,7 @@
 
         <activity android:name=".Activities.MapActivity" />
         <activity android:name=".Activities.RssiActivity" />
+        <activity android:name=".Activities.CalibrationActivity" />
     </application>
 
 </manifest>
