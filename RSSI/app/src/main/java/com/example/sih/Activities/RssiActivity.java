@@ -9,7 +9,6 @@ import android.hardware.SensorManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.animation.Animation;
@@ -35,12 +34,9 @@ public class RssiActivity extends AppCompatActivity implements SensorEventListen
 
     private float rssiValue;
     private float rssiDistance;
-    private float dirAngle;
 
     private float prevAngle;
     private float currentAngle;
-
-    private Pair< Float, Float > ans;
 
     private float associatedDistance;
 
@@ -100,8 +96,8 @@ public class RssiActivity extends AppCompatActivity implements SensorEventListen
             }
 
             if( event.sensor.getType() == Sensor.TYPE_PRESSURE ){
-                altitude.setText("" + SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, event.values[0]));
-                Log.e("shivam", "" + SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, event.values[0]));
+                altitude.setTextColor(getResources().getColor(R.color.black));
+                altitude.setText("Altitude - " + SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, event.values[0]));
             }
 
             float R[] = new float[9];
@@ -115,8 +111,7 @@ public class RssiActivity extends AppCompatActivity implements SensorEventListen
                 currentAngle = (float)Math.toDegrees(orientation[0]);
                 currentAngle = (currentAngle + 360) % 360;
 
-                direction.setText("Direction: "+ String.valueOf(currentAngle) );
-
+                adjustArrow(0);
                 Animation anim = new RotateAnimation(-prevAngle, -currentAngle, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                 prevAngle = currentAngle;
 
@@ -171,7 +166,9 @@ public class RssiActivity extends AppCompatActivity implements SensorEventListen
             public void onClick(View view) {
                 checkWifi();
                 setValues();
-                pairOfRssiAndDirection.add( new Pair<Float, Float>(rssiValue,dirAngle) );
+                WifiManager wifiCont = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                rssiValue = wifiCont.getConnectionInfo().getRssi();
+                pairOfRssiAndDirection.add( new Pair<Float, Float>(rssiValue, currentAngle) );
                 scanning();
             }
         });
@@ -218,24 +215,29 @@ public class RssiActivity extends AppCompatActivity implements SensorEventListen
 
     public void getMaximum(ArrayList < Pair <Float,Float> > pairOfRssiAndDirection)
     {
-        float max = Float.MAX_VALUE;
-        ans = new Pair<Float, Float>(0.0f, 0.0f);
+        float max = Float.MAX_VALUE, f = Float.MAX_VALUE, s = Float.MAX_VALUE;
 
         for(int i=0; i<pairOfRssiAndDirection.size(); i++){
             float temp = abs(pairOfRssiAndDirection.get(i).first);                           //Rssi
             if(temp<max){
                 max = temp;
-                ans = pairOfRssiAndDirection.get(i);
+                f = pairOfRssiAndDirection.get(i).first;
+                s = pairOfRssiAndDirection.get(i).second;
             }
         }
+
+        Pair<Float, Float> ans = new Pair(f, s);
 
         pairOfRssiAndDirection.removeAll(pairOfRssiAndDirection);
 
         associatedDistance = GetDistanceFromRssiAndTxPowerOn1m(ans.first,-45);
+        rssi.setText("Final RSSI: " + String.valueOf(ans.first));
+        distance.setText("Final Distance: " + String.valueOf(associatedDistance));
+        direction.setText("Final Direction: " + String.valueOf(ans.second));
 
-        rssi.setText(String.valueOf(ans.first));
-        distance.setText(String.valueOf(associatedDistance));
-        direction.setText(String.valueOf(ans.second));
+        rssi.setTextColor(getResources().getColor(R.color.colorPrimary));
+        distance.setTextColor(getResources().getColor(R.color.colorPrimary));
+        direction.setTextColor(getResources().getColor(R.color.colorPrimary));
 
         adjustArrow( ans.second );
 
@@ -243,7 +245,7 @@ public class RssiActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void adjustArrow( float b ) {
-        Animation an = new RotateAnimation(0.0f, abs((float)(b-dirAngle)),Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,0.5f);
+        Animation an = new RotateAnimation(0.0f, abs((float)(b)),Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,0.5f);
 
         an.setRepeatCount(0);
         an.setDuration(1000);
@@ -252,11 +254,19 @@ public class RssiActivity extends AppCompatActivity implements SensorEventListen
         hands.startAnimation(an);
     }
 
-    @SuppressLint("SetTextI18n")
+    private void setColorBlack(){
+        rssi.setTextColor(getResources().getColor(R.color.black));
+        distance.setTextColor(getResources().getColor(R.color.black));
+        direction.setTextColor(getResources().getColor(R.color.black));
+    }
+
+    @SuppressLint({"SetTextI18n", "ResourceAsColor"})
     public void setValues(){
+        setColorBlack();
         rssi.setText("Rssi Value: "+ getRssiValue());
         float dis = GetDistanceFromRssiAndTxPowerOn1m(getRssiValue(), -45);
         distance.setText("Approximate Distance: "+ String.valueOf(dis));
+        direction.setText("Direction: "+ String.valueOf(currentAngle) );
     }
 
 }
