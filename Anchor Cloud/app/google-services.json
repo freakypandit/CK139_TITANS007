@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "942874452748",
+    "firebase_url": "https://steady-habitat-226510.firebaseio.com",
+    "project_id": "steady-habitat-226510",
+    "storage_bucket": "steady-habitat-226510.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942874452748:android:bc81685fdabd570fe09f29",
+        "android_client_info": {
+          "package_name": "com.hack.innovationstar.cloudanchors"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "942874452748-q8lgohsr0ujf926rsu5hctajea4k0k07.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hack.innovationstar.cloudanchors",
+            "certificate_hash": "5b27e0b27c3756bb28a0f07231c7ef9c1948f924"
+          }
+        },
+        {
+          "client_id": "942874452748-cfevjaeqo6m0eao6thn4j38d66ilmci9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTm6O3BIthuLhG1a9F665xsq1JW3cbBoE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "942874452748-cfevjaeqo6m0eao6thn4j38d66ilmci9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
