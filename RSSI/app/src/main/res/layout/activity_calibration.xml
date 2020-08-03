@@ -8,12 +8,26 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Recorded Values"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.18"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="160dp"
-        android:layout_marginBottom="180dp"
+        android:layout_marginEnd="208dp"
+        android:layout_marginBottom="136dp"
         android:text="Floor Number"
         android:textColor="@color/black"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -21,50 +35,62 @@
         android:id="@+id/altitude"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="228dp"
+        android:layout_marginBottom="212dp"
+        android:textSize="20dp"
         android:text="Altitude"
-        android:textColor="@color/black"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
         android:id="@+id/display"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="448dp"
+        android:textSize="22dp"
+        android:layout_marginBottom="356dp"
         android:text=""
         android:textAlignment="center"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:layout_editor_absoluteX="0dp" />
 
     <EditText
         android:id="@+id/floorTv"
+        android:textAlignment="center"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="180dp"
-        android:layout_marginBottom="108dp"
+        android:layout_marginEnd="140dp"
+        android:layout_marginBottom="136dp"
+        android:background="@drawable/rounded_edittext"
         android:textColor="@color/black"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/confirm"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:background="@drawable/button_sector"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="228dp"
         android:layout_marginBottom="36dp"
-        android:text="Confirm"
+        android:text="Calibrate Floor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/done"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:background="@drawable/button_sector"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="100dp"
+        android:layout_marginEnd="50dp"
         android:layout_marginBottom="36dp"
-        android:text="Done"
+        android:text="Calibration Done"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

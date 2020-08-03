@@ -21,9 +21,9 @@ import java.util.Map;
 
 public class CalibrationActivity extends AppCompatActivity implements SensorEventListener {
 
-    HashMap<String, Pair<Integer, Integer>> map;
+    HashMap<String, Pair<Float, Float>> map;
     Button confirm, done;
-    TextView altitude, display;
+    TextView altitude, display, record;
     EditText floorTv;
     float height;
     private SensorManager sensorManager;
@@ -39,6 +39,7 @@ public class CalibrationActivity extends AppCompatActivity implements SensorEven
         confirm = findViewById(R.id.confirm);
         done = findViewById(R.id.done);
         altitude = findViewById(R.id.altitude);
+        record = findViewById(R.id.record);
         floorTv = findViewById(R.id.floorTv);
         display = findViewById(R.id.display);
         height = 0.0f;
@@ -46,6 +47,7 @@ public class CalibrationActivity extends AppCompatActivity implements SensorEven
         pressure = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
 
         display.setVisibility(View.INVISIBLE);
+        record.setVisibility(View.INVISIBLE);
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +58,8 @@ public class CalibrationActivity extends AppCompatActivity implements SensorEven
                     snackbar.show();
                 }
                 else{
-                    map.put(floorTv.getText().toString(), new Pair((int)height-1, (int)height+1) );
+                    map.put(floorTv.getText().toString(), new Pair( height-0.5, height+0.5) );
+                    floorTv.setText("");
                 }
             }
         });
@@ -65,8 +68,19 @@ public class CalibrationActivity extends AppCompatActivity implements SensorEven
             @Override
             public void onClick(View view) {
                 display.setVisibility(View.VISIBLE);
+                record.setVisibility(View.VISIBLE);
                 confirm.setEnabled(false);
                 done.setEnabled(false);
+
+                String res = "Recorded Values:\n";
+
+                for (Map.Entry mapElement : map.entrySet()) {
+                    String key = (String)mapElement.getKey();
+                    Pair<Float, Float> temp = (Pair<Float, Float>) mapElement.getValue();
+                    res = res + "Floor " + key + ": " + temp.first + " to " + temp.second + " \n";
+                }
+                Log.e("shivam", res);
+                record.setText(res);
             }
         });
 
@@ -84,7 +98,7 @@ public class CalibrationActivity extends AppCompatActivity implements SensorEven
 
                 for (Map.Entry mapElement : map.entrySet()) {
                     String key = (String)mapElement.getKey();
-                    Pair<Integer, Integer> temp = (Pair<Integer, Integer>) mapElement.getValue();
+                    Pair<Float, Float> temp = (Pair<Float, Float>) mapElement.getValue();
                     if( (int)height>=temp.first && (int)height<=temp.second ){
                         display.setText("You are on floor " + key);
                         Log.e("shivam", "You are on floor " + key);
