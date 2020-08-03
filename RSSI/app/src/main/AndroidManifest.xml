@@ -41,6 +41,9 @@
         <activity android:name=".Activities.MapActivity" />
         <activity android:name=".Activities.RssiActivity" />
         <activity android:name=".Activities.CalibrationActivity" />
+        <activity android:name=".Activities.QrActivity" />
+        <activity android:name=".Activities.BlockActivity" />
+        <activity android:name=".Activities.ar" />
     </application>
 
 </manifest>

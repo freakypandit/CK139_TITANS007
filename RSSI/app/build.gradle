@@ -46,4 +46,10 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.2.0'
     implementation 'androidx.navigation:navigation-ui:2.2.1'
 
+    //QR
+    implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
+
+    //Image Zoom
+    implementation 'com.bogdwellers:pinchtozoom:0.1'
+
 }

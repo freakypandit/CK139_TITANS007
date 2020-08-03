@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <item android:id="@+id/public_utilities"
+        android:title="Public Utilities">
+
+        <menu>
+
+            <item android:id="@+id/wheel_chair"
+                android:title="Wheel Chair"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/elevator"
+                android:title="Elevator"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/restroom"
+                android:title="Restroom"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/stair"
+                android:title="Stairs"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/extinguisher"
+                android:title="Fire Extinguishers"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/medical_room"
+                android:title="Medical Room"
+                app:showAsAction="never" />
+
+        </menu>
+
+    </item>
+
+
+</menu>

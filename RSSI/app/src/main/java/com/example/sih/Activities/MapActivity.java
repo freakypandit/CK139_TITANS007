@@ -1,5 +1,6 @@
 package com.example.sih.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.widget.SearchView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
 import com.example.sih.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -18,6 +20,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -60,15 +63,27 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                         @Override
                         public boolean onMarkerClick(Marker marker) {
 
-                            //Hospital Name
-                            if(location.equals("")){
-                                Toast.makeText(MapActivity.this, "Welcome!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MapActivity.this, "Welcome!", Toast.LENGTH_SHORT).show();
 
-                                //startActivity
-                                startActivity(new Intent(MapActivity.this, MainActivity.class));
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MapActivity.this);
+                            builder.setTitle("You want to skip QR activity ?");
 
-                                return false;
-                            }
+                            builder.setNegativeButton("NO",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            startActivity(new Intent(MapActivity.this, QrActivity.class));
+                                        }
+                                    });
+
+                            builder.setPositiveButton("YES",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            startActivity(new Intent(MapActivity.this, BlockActivity.class));
+                                        }
+                                    });
+
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
 
                             return false;
                         }
@@ -92,7 +107,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         googleMap = gmap;
         //Update Latitude and Longitude of Hospital
-        googleMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(20.5937, 78.9629) , 4.5f) );
+        googleMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(30.750400, 76.740230) , 4.5f) );
     }
 
     @Override

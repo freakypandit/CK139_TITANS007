@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class CalibrationActivity extends AppCompatActivity implements SensorEventListener {
 
-    HashMap<String, Pair<Float, Float>> map;
+    HashMap<String, Pair<Integer, Integer>> map;
     Button confirm, done;
     TextView altitude, display, record;
     EditText floorTv;
@@ -58,7 +58,7 @@ public class CalibrationActivity extends AppCompatActivity implements SensorEven
                     snackbar.show();
                 }
                 else{
-                    map.put(floorTv.getText().toString(), new Pair( height-0.5, height+0.5) );
+                    map.put(floorTv.getText().toString(), new Pair( (int)height, (int)height) );
                     floorTv.setText("");
                 }
             }
@@ -76,8 +76,9 @@ public class CalibrationActivity extends AppCompatActivity implements SensorEven
 
                 for (Map.Entry mapElement : map.entrySet()) {
                     String key = (String)mapElement.getKey();
-                    Pair<Float, Float> temp = (Pair<Float, Float>) mapElement.getValue();
-                    res = res + "Floor " + key + ": " + temp.first + " to " + temp.second + " \n";
+                    Pair<Integer, Integer> temp = (Pair<Integer, Integer>) mapElement.getValue();
+                    int x = temp.first - 1;
+                    res = res + "Floor " + key + ": " + x + ".5 to " + temp.second + ".5 \n";
                 }
                 Log.e("shivam", res);
                 record.setText(res);
@@ -98,8 +99,10 @@ public class CalibrationActivity extends AppCompatActivity implements SensorEven
 
                 for (Map.Entry mapElement : map.entrySet()) {
                     String key = (String)mapElement.getKey();
-                    Pair<Float, Float> temp = (Pair<Float, Float>) mapElement.getValue();
-                    if( (int)height>=temp.first && (int)height<=temp.second ){
+                    Pair<Integer, Integer> temp = (Pair<Integer, Integer>) mapElement.getValue();
+                    int x = (int)temp.first - 1;
+                    int y = (int)temp.second + 1;
+                    if( (int)height>=x && (int)height<=y ){
                         display.setText("You are on floor " + key);
                         Log.e("shivam", "You are on floor " + key);
                     }
